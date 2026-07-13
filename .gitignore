@@ -1,0 +1,17 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Logs / devcontainer CLI test output
+*.log
+**/output/
+
+# Node (only if the devcontainer CLI is run locally)
+node_modules/
+
+# Stray local AI CLI state — keep tool state out of the repo
+.agents/
+.codex/
+.claude/
