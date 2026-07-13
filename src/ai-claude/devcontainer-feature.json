@@ -1,0 +1,8 @@
+{
+  "id": "ai-claude",
+  "version": "1.0.0",
+  "name": "AI: Claude Code CLI",
+  "description": "Installs Claude Code CLI using a checksum-verifying standalone installer.",
+  "keywords": ["ai", "anthropic", "claude", "cli"],
+  "postCreateCommand": "/usr/local/share/ai-claude/post-create.sh"
+}
