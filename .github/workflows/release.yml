@@ -1,0 +1,30 @@
+name: Release AI Agent Features
+
+# Publishes every feature under src/ to GHCR at ghcr.io/<owner>/<repo>/<feature>.
+# The namespace is derived automatically from this repository, so nothing here
+# needs editing — just push to main (or trigger manually from the Actions tab).
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Publish Features to GHCR
+        uses: devcontainers/action@v1
+        with:
+          publish-features: "true"
+          base-path-to-features: "./src"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
