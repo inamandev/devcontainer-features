@@ -35,6 +35,29 @@ Install **and** persist login across rebuilds and projects (recommended):
 
 `ai-agents` brings in `ai-codex` + `ai-claude` + the two trusted features, so both CLIs are installed and their logins persist on the `ai-codex-global` / `ai-claude-global` volumes.
 
+## Using with Zed
+
+Zed's dev container support (as of Zed 1.7.x) does **not** resolve feature `dependsOn`, so the `ai-agents` bundle and the `-trusted → install` links pull in nothing on their own. **List every feature explicitly** instead (adding `ai-agents` alone only gives you `ai-agents-doctor`):
+
+```jsonc
+"features": {
+  "ghcr.io/OWNER/REPO/ai-codex:1": {},
+  "ghcr.io/OWNER/REPO/ai-codex-trusted:1": {},
+  "ghcr.io/OWNER/REPO/ai-claude:1": {},
+  "ghcr.io/OWNER/REPO/ai-claude-trusted:1": {}
+}
+```
+
+Zed may also not run each feature's `postCreateCommand`. If `codex` / `claude` aren't installed after the container builds, add a **top-level** `postCreateCommand` to your `devcontainer.json`:
+
+```jsonc
+"postCreateCommand": "/usr/local/share/ai-codex/post-create.sh && /usr/local/share/ai-claude/post-create.sh"
+```
+
+Two more podman + Zed notes:
+- Set `"use_podman": true` in your Zed `settings.json`.
+- Your base image's `/tmp` must be world-writable (`1777`). Some custom images leave it at `755`, which breaks non-root installs **and** Zed's own remote server — fix it with `RUN chmod 1777 /tmp` in the base image's Dockerfile.
+
 ## Authenticate once
 
 You log in **one time**. The login token is written to a named volume (`CODEX_HOME` / `CLAUDE_CONFIG_DIR` point at it), so every container that uses a trusted feature — this project rebuilt, or any other project — reuses it.
