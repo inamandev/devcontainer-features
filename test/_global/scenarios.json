@@ -1,0 +1,13 @@
+{
+  "full_stack": {
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "remoteUser": "vscode",
+    "features": {
+      "ai-codex": {},
+      "ai-codex-trusted": {},
+      "ai-claude": {},
+      "ai-claude-trusted": {},
+      "ai-agents": {}
+    }
+  }
+}
