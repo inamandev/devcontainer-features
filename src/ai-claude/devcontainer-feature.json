@@ -1,6 +1,6 @@
 {
   "id": "ai-claude",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "AI: Claude Code CLI",
   "description": "Installs Claude Code CLI using a checksum-verifying standalone installer.",
   "keywords": ["ai", "anthropic", "claude", "cli"],

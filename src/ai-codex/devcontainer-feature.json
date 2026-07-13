@@ -1,6 +1,6 @@
 {
   "id": "ai-codex",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "AI: OpenAI Codex CLI",
   "description": "Installs OpenAI Codex CLI using a checksum-verifying standalone installer.",
   "keywords": ["ai", "openai", "codex", "cli"],
