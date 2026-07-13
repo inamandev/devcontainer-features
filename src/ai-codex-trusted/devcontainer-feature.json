@@ -1,0 +1,21 @@
+{
+  "id": "ai-codex-trusted",
+  "version": "1.0.0",
+  "name": "AI: OpenAI Codex CLI (trusted login)",
+  "description": "Persists Codex login/config on a named volume by pointing CODEX_HOME at it. Pairs with the ai-codex feature.",
+  "keywords": ["ai", "openai", "codex", "cli", "auth", "trusted"],
+  "dependsOn": {
+    "ghcr.io/OWNER/REPO/ai-codex:1": {}
+  },
+  "containerEnv": {
+    "CODEX_HOME": "/ai-state/codex"
+  },
+  "mounts": [
+    {
+      "source": "ai-codex-global",
+      "target": "/ai-state/codex",
+      "type": "volume"
+    }
+  ],
+  "postCreateCommand": "/usr/local/share/ai-codex-trusted/post-create.sh"
+}
