@@ -1,0 +1,21 @@
+{
+  "id": "ai-claude-trusted",
+  "version": "1.0.0",
+  "name": "AI: Claude Code CLI (trusted login)",
+  "description": "Persists Claude Code login/config on a named volume by pointing CLAUDE_CONFIG_DIR at it. Pairs with the ai-claude feature.",
+  "keywords": ["ai", "anthropic", "claude", "cli", "auth", "trusted"],
+  "dependsOn": {
+    "ghcr.io/OWNER/REPO/ai-claude:1": {}
+  },
+  "containerEnv": {
+    "CLAUDE_CONFIG_DIR": "/ai-state/claude"
+  },
+  "mounts": [
+    {
+      "source": "ai-claude-global",
+      "target": "/ai-state/claude",
+      "type": "volume"
+    }
+  ],
+  "postCreateCommand": "/usr/local/share/ai-claude-trusted/post-create.sh"
+}
