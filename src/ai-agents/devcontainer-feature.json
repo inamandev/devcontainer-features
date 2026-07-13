@@ -1,0 +1,11 @@
+{
+  "id": "ai-agents",
+  "version": "1.0.0",
+  "name": "AI: Agents (Claude Code + Codex, trusted)",
+  "description": "Convenience meta-feature that combines the trusted Codex and Claude Code features and adds ai-agents-doctor.",
+  "keywords": ["ai", "agents", "openai", "codex", "anthropic", "claude"],
+  "dependsOn": {
+    "ghcr.io/OWNER/REPO/ai-codex-trusted:1": {},
+    "ghcr.io/OWNER/REPO/ai-claude-trusted:1": {}
+  }
+}
