@@ -5,7 +5,7 @@
   "description": "Persists Codex login/config on a named volume by pointing CODEX_HOME at it. Pairs with the ai-codex feature.",
   "keywords": ["ai", "openai", "codex", "cli", "auth", "trusted"],
   "dependsOn": {
-    "ghcr.io/OWNER/REPO/ai-codex:1": {}
+    "ghcr.io/inamandev/devcontainer-features/ai-codex:1": {}
   },
   "containerEnv": {
     "CODEX_HOME": "/ai-state/codex"

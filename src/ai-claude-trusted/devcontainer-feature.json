@@ -5,7 +5,7 @@
   "description": "Persists Claude Code login/config on a named volume by pointing CLAUDE_CONFIG_DIR at it. Pairs with the ai-claude feature.",
   "keywords": ["ai", "anthropic", "claude", "cli", "auth", "trusted"],
   "dependsOn": {
-    "ghcr.io/OWNER/REPO/ai-claude:1": {}
+    "ghcr.io/inamandev/devcontainer-features/ai-claude:1": {}
   },
   "containerEnv": {
     "CLAUDE_CONFIG_DIR": "/ai-state/claude"
