@@ -1,0 +1,8 @@
+{
+  "id": "ai-codex",
+  "version": "1.0.0",
+  "name": "AI: OpenAI Codex CLI",
+  "description": "Installs OpenAI Codex CLI using a checksum-verifying standalone installer.",
+  "keywords": ["ai", "openai", "codex", "cli"],
+  "postCreateCommand": "/usr/local/share/ai-codex/post-create.sh"
+}
