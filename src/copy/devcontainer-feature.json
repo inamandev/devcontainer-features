@@ -1,0 +1,7 @@
+{
+  "id": "copy",
+  "version": "1.0.0",
+  "name": "Terminal clipboard copy (OSC 52)",
+  "description": "Installs a `copy` command that pipes stdin to the system clipboard via OSC 52 — works inside containers and over SSH.",
+  "keywords": ["clipboard", "osc52", "copy", "terminal"]
+}

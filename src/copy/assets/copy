@@ -1,0 +1,4 @@
+#!/bin/sh
+# Send stdin to the system clipboard via OSC 52 (works inside containers / over SSH).
+# Usage:  echo hello | copy      cat file.txt | copy      terraform output | copy
+printf '\033]52;c;%s\007' "$(base64 | tr -d '\n')"
