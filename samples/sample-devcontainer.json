@@ -1,0 +1,31 @@
+{
+  "name": "GCP Terraform Udemy",
+  "image": "localhost/terraform-devcontainer:latest",
+  "features": {
+    "ghcr.io/inamandev/devcontainer-features/ai-codex:1": {},
+    "ghcr.io/inamandev/devcontainer-features/ai-codex-trusted:1": {},
+    "ghcr.io/inamandev/devcontainer-features/ai-claude:1": {},
+    "ghcr.io/inamandev/devcontainer-features/ai-claude-trusted:1": {},
+    "ghcr.io/inamandev/devcontainer-features/copy:1": {}
+  },
+  "runArgs": ["--userns=keep-id", "--name", "gcp-terraform-udemy"],
+  "updateRemoteUserUID": false,
+  "remoteUser": "vscode",
+  "onCreateCommand": "sudo chmod 1777 /tmp",
+  "postCreateCommand": {
+    "install-codex": "/usr/local/share/ai-codex/post-create.sh",
+    "install-claude": "/usr/local/share/ai-claude/post-create.sh"
+  },
+  "postStartCommand": "sudo chmod 1777 /tmp",
+  "customizations": {
+    "zed": {
+      "settings": {
+        "buffer_font_family": "JetBrains Mono",
+        "terminal": {
+          "alternate_scroll": "on",
+          "copy_on_select": true
+        }
+      }
+    }
+  }
+}
