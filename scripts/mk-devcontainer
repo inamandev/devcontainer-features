@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# mk-devcontainer — scaffold a .devcontainer/devcontainer.json using the
+# inamandev/devcontainer-features collection (ai-codex, ai-claude, copy),
+# the /tmp fix, shared auth volumes, and a podman container name.
+set -euo pipefail
+
+NS="ghcr.io/inamandev/devcontainer-features"
+
+usage() {
+  cat >&2 <<EOF
+Usage: mk-devcontainer -n "Display Name" -i <image> [-f]
+
+  -n, --name    Display name for the dev container (required)
+  -i, --image   Base image, e.g. localhost/terraform-devcontainer:latest (required)
+  -f, --force   Overwrite an existing .devcontainer/devcontainer.json
+  -h, --help    Show this help
+
+Writes ./.devcontainer/devcontainer.json in the current directory.
+The podman container name is derived from the display name (slugified).
+EOF
+  exit "${1:-1}"
+}
+
+NAME="" IMAGE="" FORCE=0
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -n|--name)  NAME="${2:-}"; shift 2;;
+    -i|--image) IMAGE="${2:-}"; shift 2;;
+    -f|--force) FORCE=1; shift;;
+    -h|--help)  usage 0;;
+    *) echo "Unknown argument: $1" >&2; usage;;
+  esac
+done
+
+[ -n "$NAME" ] && [ -n "$IMAGE" ] || usage
+
+# podman container name: lowercase, non-alphanumerics -> '-', trimmed
+SLUG="$(printf '%s' "$NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]\+/-/g; s/^-*//; s/-*$//')"
+[ -n "$SLUG" ] || { echo "Could not derive a container name from: $NAME" >&2; exit 1; }
+
+OUT=".devcontainer/devcontainer.json"
+if [ -e "$OUT" ] && [ "$FORCE" -ne 1 ]; then
+  echo "$OUT already exists — pass -f to overwrite." >&2
+  exit 1
+fi
+mkdir -p .devcontainer
+
+cat > "$OUT" <<EOF
+{
+  "name": "$NAME",
+  "image": "$IMAGE",
+  "features": {
+    "$NS/ai-codex:1": {},
+    "$NS/ai-codex-trusted:1": {},
+    "$NS/ai-claude:1": {},
+    "$NS/ai-claude-trusted:1": {},
+    "$NS/copy:1": {}
+  },
+  "runArgs": ["--userns=keep-id", "--name", "$SLUG"],
+  "updateRemoteUserUID": false,
+  "remoteUser": "vscode",
+  "onCreateCommand": "sudo chmod 1777 /tmp",
+  "postCreateCommand": {
+    "install-codex": "/usr/local/share/ai-codex/post-create.sh",
+    "install-claude": "/usr/local/share/ai-claude/post-create.sh"
+  },
+  "postStartCommand": "sudo chmod 1777 /tmp",
+  "customizations": {
+    "zed": {
+      "settings": {
+        "buffer_font_family": "JetBrains Mono",
+        "terminal": {
+          "alternate_scroll": "on",
+          "copy_on_select": true
+        }
+      }
+    }
+  }
+}
+EOF
+
+echo "Wrote $OUT"
+echo "  name:      $NAME"
+echo "  image:     $IMAGE"
+echo "  container: $SLUG"
